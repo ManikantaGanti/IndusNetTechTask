@@ -1,0 +1,157 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Your Details</h2>
+        <form id="userForm" method="post">
+            <input type="text" id="name" placeholder="Name" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="number" id="contact" placeholder="Contact Number" required><br>
+            <button type="submit" onclick="submitHandle()">Submit</button>
+            
+        </form>
+        <button onclick="clickHandle()" id="myBtn">All Entries</button>
+        <p id="confirmation"></p>
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p id="nodata" style="color:red"></p>
+              <div id="parent">
+                <table border="1" align="center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email Id</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result">
+
+                    </tbody>
+                </table>
+              </div>
+            </div>
+          
+          </div>
+    </div>
+    <script>
+        function submitHandle(event) {
+            // event.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let contact = document.getElementById('contact').value;
+
+            // Client-side validation
+            if (name.trim() === '' || email.trim() === '' || contact.trim() === '') {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Data to be sent to the server
+            let formData = {
+                name: name,
+                email: email,
+                contact: contact
+            };
+
+            // Send form data to server
+            fetch('http://localhost:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.error('Error:', error));
+            alert('Form submitted successfully!');
+        }
+
+        function validateEmail(email) {
+            // Simple email validation
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            var result = document.getElementById("result");
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+                fetch('http://localhost:3000/entries')
+                .then(response => response.json())
+                .then(data => {
+                    if(!data.length){
+                        document.getElementById("parent").style.display = "none";
+                        document.getElementById("nodata").innerHTML = "No Data Found In DB...";
+                    }
+                    else{
+                        document.getElementById("parent").style.display = "block";
+                        data.map((item) => {
+                        const tr = document.createElement("tr");
+                        const td1 = document.createElement("td");
+                        const td2 = document.createElement("td");
+                        const td3 = document.createElement("td");
+
+                        td1.innerHTML = item.name;
+                        td2.innerHTML = item.email;
+                        td3.innerHTML = item.contact;
+
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+
+                        result.appendChild(tr);
+                    });
+                }
+                    })
+                    .catch(error => console.error('Error:', error));
+                    modal.style.display = "block";
+                }
+                   
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                while (result.firstChild) {
+                    result.removeChild(result.firstChild);
+                }
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                while (result.firstChild) {
+                    result.removeChild(result.firstChild);
+                }
+                modal.style.display = "none";
+            }
+            }
+    </script>
+</body>
+</html>

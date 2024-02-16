@@ -1,0 +1,83 @@
+.container {
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto;
+  margin-top: 150px;
+  text-align: center;
+  background-color: aqua;
+  border-radius: 10px;
+  border: 5px solid burlywood; /* Adding border */
+  padding: 20px; /* Adding padding for better spacing */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+}
+
+.container h2 {
+  color: navy; /* Changing heading color */
+}
+
+.container p {
+  font-style: italic; /* Italicizing paragraph text */
+  line-height: 1.6; /* Improving paragraph readability */
+}
+
+.container a {
+  color: #FF4500; /* Changing link color to orange-red */
+  text-decoration: none; /* Removing default underline */
+  font-weight: bold; /* Making links bold */
+}
+
+.container a:hover {
+  text-decoration: underline; /* Underline links on hover */
+}
+
+
+input, button {
+    margin-bottom: 10px;
+}
+
+#confirmation {
+    margin-top: 20px;
+    display: none;
+    color: green;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #ffffff;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #e80a0a;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
